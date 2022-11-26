@@ -1,8 +1,11 @@
-from Gramatic import Gramatic
+from Grammer import Grammer, convertToChownsky
 
 
 
 
 if __name__ == '__main__':
-    g = Gramatic()
-    g.readGramatic('test')
+    g = Grammer()
+    g.readGrammer('test')
+    g.print()
+    convertToChownsky(g)
+    g.print()
