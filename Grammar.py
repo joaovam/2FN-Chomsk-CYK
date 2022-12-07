@@ -38,7 +38,7 @@ def remove_lambda_productions(grammar:Grammar):
         for item in rhs:
             if item == "$":
                 nullables.append(lhs)
-    for 
+    # for 
 
 #
 #
@@ -49,10 +49,10 @@ def remove_lambda_productions(grammar:Grammar):
 
 def cfgToCnf(grammar: Grammar):
     # Convert the grammar to CNF
-    cnf_grammar = convert_to_cnf(grammar.rules)
+    # cnf_grammar = convert_to_cnf(grammar.rules)
+    cnf_grammar = to_CNF(grammar.rules)
 
     # Print the resulting CNF grammar
-
 
     # Helper function for generating new non-terminal symbols
 
@@ -93,3 +93,16 @@ def convert_to_cnf(grammar):
 
     # Return the resulting CNF grammar
     return cnf_grammar
+
+def START(rules):
+    return [('S0', [rules[0][0]])] + rules
+
+def to_CNF(rules):
+
+    #START: Eliminate the start symbol from the right side, i.e., the start symbol has only one rule, on the format S -> S_0
+    rules = START(rules)
+    #TERM
+    
+    #BIN
+    #DEL
+    #UNIT
