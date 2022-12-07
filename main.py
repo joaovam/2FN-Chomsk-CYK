@@ -9,7 +9,7 @@ if __name__ == '__main__':
     #g.print()
     grammar = cfgToCnf(g)
     #print(grammar)
-    #g.print()
+    g.print()
 
 
 
