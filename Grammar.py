@@ -2,19 +2,25 @@ class Grammar:
     def __init__(self):
 
         self.rules = []
+        self.terminals = []
+        self.variables = []
 
-    def readGrammar(self, filename):  # $ == lambda, simbo
+    def readGrammar(self, filename):  # $ == lambda
+
+
+
         with open(filename, 'r', encoding='utf8') as file:
+            self.variables = file.readline().strip().split(" ")
+            self.terminals = file.readline().strip().split(" ")
 
             for line in file:
                 if line == '*':
                     break
-                print("LINE", line)
+
                 variable, rules = line.strip().split('->')
 
                 for rule in rules:
                     rule = rule.split("|")
-                    #print("RULE", rule)
                     x = []
                     for r in rule:
                         if r.strip() != '':
@@ -22,9 +28,15 @@ class Grammar:
                     if len(x) > 0:
                         self.rules.append((variable, x))
 
-        print(self.rules)
 
     def print(self):
+        print("Variables:")
+        print(self.variables)
+
+        print("Terminals:")
+        print(self.terminals)
+
+        print("Rules:")
         for lhs, rhs in self.rules:
             print(f"{lhs} -> {' '.join(rhs)}")
 
@@ -32,19 +44,6 @@ class Grammar:
 
 
 
-def remove_lambda_productions(grammar:Grammar):
-    for lhs, rhs in grammar.rules:
-        nullables = []
-        for item in rhs:
-            if item == "$":
-                nullables.append(lhs)
-    for 
-
-#
-#
-# def removeUnitProductions():
-#
-# def removeUselessProductions():
 
 
 def cfgToCnf(grammar: Grammar):
