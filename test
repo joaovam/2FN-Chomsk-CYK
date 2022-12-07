@@ -1,4 +1,2 @@
-A B C
-a b c $
-A -> aB | $
+S->aB | aBBaBB | $
 *

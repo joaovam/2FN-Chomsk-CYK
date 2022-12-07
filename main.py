@@ -1,11 +1,15 @@
-from Grammer import Grammer, convertToChownsky
+from Grammar import Grammar, cfgToCnf
 
 
 
 
 if __name__ == '__main__':
-    g = Grammer()
-    g.readGrammer('test')
-    g.print()
-    convertToChownsky(g)
-    g.print()
+    g = Grammar()
+    g.readGrammar('test')
+    #g.print()
+    grammar = cfgToCnf(g)
+    #print(grammar)
+    #g.print()
+
+
+
