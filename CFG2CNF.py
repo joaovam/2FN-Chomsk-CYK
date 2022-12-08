@@ -3,9 +3,11 @@
 import sys, helper
 
 left, right = 0, 1
-
+counter = 0
 K, V, Productions = [],[],[]
-variablesJar = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "W", "X", "Y", "Z"]
+VARIABLE = ""
+
+
 
 
 def isUnitary(rule, variables):
@@ -13,15 +15,26 @@ def isUnitary(rule, variables):
 		return True
 	return False
 
-def isSimple(rule):
+def isSimple(rule, V, K):
 	if rule[left] in V and rule[right][0] in K and len(rule[right]) == 1:
 		return True
 	return False
 
+def defineVariable(V):
+	variablesJar = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "W", "X", "Y", "Z"]
 
-for nonTerminal in V:
-	if nonTerminal in variablesJar:
-		variablesJar.remove(nonTerminal)
+	for nonTerminal in V:
+		if nonTerminal in variablesJar:
+			variablesJar.remove(nonTerminal)
+	if len(variablesJar) > 0:
+		VARIABLE = variablesJar.pop()
+
+def getNewVar():
+	newVar = f"{VARIABLE}_{counter}"
+	counter += 1
+	return newVar
+
+
 
 #Add S0->S rule––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––START
 def START(productions, variables):
@@ -43,7 +56,7 @@ def TERM(productions, variables):
 				for index, value in enumerate(production[right]):
 					if term == value and not term in dictionary:
 						#it's created a new production vaiable->term and added to it 
-						dictionary[term] = variablesJar.pop()
+						dictionary[term] = getNewVar()
 						#Variables set it's updated adding new variable
 						V.append(dictionary[term])
 						newProductions.append( (dictionary[term], [term]) )
@@ -65,9 +78,9 @@ def BIN(productions, variables):
 		if k <= 2:
 			result.append( production )
 		else:
-			newVar = variablesJar.pop(0)
-			variables.append(newVar+'1')
-			result.append( (production[left], [production[right][0]]+[newVar+'1']) )
+			newVar = getNewVar()
+			variables.append(newVar)
+			result.append( (production[left], [production[right][0]]+[newVar]) )
 			i = 1
 #TODO
 			for i in range(1, k-2 ):
