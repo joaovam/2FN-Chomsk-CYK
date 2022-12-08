@@ -1,4 +1,6 @@
-S B
-a $
-S->aB | aBBaBB | $
+S Y X
+a b c
+S -> aXb
+X -> aY | bY | e
+Y -> X | c
 *

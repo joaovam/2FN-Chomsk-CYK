@@ -1,3 +1,6 @@
+import CFG2CNF as f2c
+import helper
+
 class Grammar:
     def __init__(self):
 
@@ -37,9 +40,8 @@ class Grammar:
         print(self.terminals)
 
         print("Rules:")
-        for lhs, rhs in self.rules:
-            print(f"{lhs} -> {' '.join(rhs)}")
-
+        print(self.rules)
+        helper.prettyForm(self.rules)
 
 
 
@@ -49,8 +51,20 @@ class Grammar:
 def cfgToCnf(grammar: Grammar):
     # Convert the grammar to CNF
     # cnf_grammar = convert_to_cnf(grammar.rules)
-    cnf_grammar = to_CNF(grammar.rules)
+    f2c.defineVariable(grammar.variables)
 
+    print("STEP 1: " + str(grammar.rules))
+    grammar.rules = f2c.START(grammar.rules, variables=grammar.variables)
+    print("STEP 2: " + str(grammar.rules))
+    grammar.rules = f2c.TERM(grammar.rules, variables=grammar.variables, terminals=grammar.terminals)
+    print("STEP 3: " + str(grammar.rules))
+    grammar.rules = f2c.BIN(grammar.rules, variables=grammar.variables,)
+    print("STEP 4: " + str(grammar.rules))
+    grammar.rules = f2c.DEL(grammar.rules)
+    print("STEP 5: " + str(grammar.rules))
+    grammar.rules = f2c.UNIT(grammar.rules, variables=grammar.variables,)
+    print("STEP 6: " + str(grammar.rules))
+    
     # Print the resulting CNF grammar
 
     # Helper function for generating new non-terminal symbols
@@ -92,16 +106,3 @@ def convert_to_cnf(grammar):
 
     # Return the resulting CNF grammar
     return cnf_grammar
-
-def START(rules):
-    return [('S0', [rules[0][0]])] + rules
-
-def to_CNF(rules):
-
-    #START: Eliminate the start symbol from the right side, i.e., the start symbol has only one rule, on the format S -> S_0
-    rules = START(rules)
-    #TERM
-    
-    #BIN
-    #DEL
-    #UNIT

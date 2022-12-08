@@ -7,13 +7,6 @@ def union(lst1, lst2):
     final_list = list(set().union(lst1, lst2))
     return final_list
 
-def loadModel(modelPath):
-    file = open(modelPath).read()
-    K = (file.split("Variables:\n")[0].replace("Terminals:\n","").replace("\n",""))
-    V = (file.split("Variables:\n")[1].split("Productions:\n")[0].replace("Variables:\n","").replace("\n",""))
-    P = (file.split("Productions:\n")[1])
-
-    return cleanAlphabet(K), cleanAlphabet(V), cleanProduction(P)
 #Make production easy to work with
 def cleanProduction(expression):
     result = []

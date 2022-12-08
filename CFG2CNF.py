@@ -3,7 +3,7 @@
 import sys, helper
 
 left, right = 0, 1
-counter = 0
+COUNTER = 0
 K, V, Productions = [], [], []
 VARIABLE = ""
 
@@ -22,7 +22,7 @@ def isSimple(rule, variables, terminals):
 def defineVariable(V):
     variablesJar = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
                     "U", "W", "X", "Y", "Z"]
-
+    global VARIABLE
     for nonTerminal in V:
         if nonTerminal in variablesJar:
             variablesJar.remove(nonTerminal)
@@ -31,15 +31,17 @@ def defineVariable(V):
 
 
 def getNewVar():
-    newVar = f"{VARIABLE}_{counter}"
-    counter += 1
-    return newVar
+    #newVar = f"{VARIABLE}_{counter}"
+	global COUNTER
+	newVar = str(VARIABLE) + "_" + str(COUNTER)
+	COUNTER += 1
+	return newVar
 
 
 # Add S0->S rule––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––START
 def START(productions, variables):
-    variables.append('S0')
-    return [('S0', [variables[0]])] + productions
+    variables.append(variables[0]+'_0')
+    return [(variables[0]+'_0', [variables[0]])] + productions
 
 #Remove rules containing both terms and variables, like A->Bc, replacing by A->BZ and Z->c–––––––––––TERM
 def TERM(productions, variables, terminals):
@@ -48,7 +50,7 @@ def TERM(productions, variables, terminals):
 	dictionary = helper.setupDict(productions, variables, terms=terminals)
 	for production in productions:
 		#check if the production is simple
-		if isSimple(production):
+		if isSimple(production, variables, terminals):
 			#in that case there is nothing to change
 			newProductions.append(production)
 		else:
@@ -97,7 +99,7 @@ def DEL(productions):
     # seekAndDestroy throw back in:
     #        – outlaws all left side of productions such that right side is equal to the outlaw
     #        – productions the productions without outlaws
-    outlaws, productions = helper.seekAndDestroy(target='e', productions=productions)
+    outlaws, productions = helper.seekAndDestroy(target='$', productions=productions)
     # add new reformulation of old rules
     for outlaw in outlaws:
         # consider every production: old + new resulting important when more than one outlaws are in the same prod.
@@ -140,7 +142,7 @@ def UNIT(productions, variables):
         i += 1
     return result
 
-
+""" 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         modelPath = str(sys.argv[1])
@@ -157,4 +159,4 @@ if __name__ == '__main__':
 
     print(helper.prettyForm(Productions))
     print(len(Productions))
-    open('out.txt', 'w').write(helper.prettyForm(Productions))
+    open('out.txt', 'w').write(helper.prettyForm(Productions)) """
