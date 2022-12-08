@@ -13,15 +13,10 @@ def isUnitary(rule, variables):
 		return True
 	return False
 
-def isSimple(rule):
-	if rule[left] in V and rule[right][0] in K and len(rule[right]) == 1:
+def isSimple(rule, variables, terminals):
+	if rule[left] in variables and rule[right][0] in terminals and len(rule[right]) == 1:
 		return True
 	return False
-
-
-for nonTerminal in V:
-	if nonTerminal in variablesJar:
-		variablesJar.remove(nonTerminal)
 
 #Add S0->S rule––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––START
 def START(productions, variables):
@@ -29,7 +24,7 @@ def START(productions, variables):
 	return [('S0', [variables[0]])] + productions
 
 #Remove rules containing both terms and variables, like A->Bc, replacing by A->BZ and Z->c–––––––––––TERM
-def TERM(productions, variables):
+def TERM(productions, variables, terminals):
 	newProductions = []
 	#create a dictionari for all base production, like A->a, in the form dic['a'] = 'A'
 	dictionary = helper.setupDict(productions, variables, terms=K)
@@ -39,13 +34,13 @@ def TERM(productions, variables):
 			#in that case there is nothing to change
 			newProductions.append(production)
 		else:
-			for term in K:
+			for term in terminals:
 				for index, value in enumerate(production[right]):
 					if term == value and not term in dictionary:
 						#it's created a new production vaiable->term and added to it 
 						dictionary[term] = variablesJar.pop()
 						#Variables set it's updated adding new variable
-						V.append(dictionary[term])
+						variables.append(dictionary[term])
 						newProductions.append( (dictionary[term], [term]) )
 						
 						production[right][index] = dictionary[term]

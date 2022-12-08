@@ -60,13 +60,12 @@ def rewrite(target, production):
 	#for all found targets in production
 	for i in range(len(positions)+1):
  		#for all combinations of all possible lenght phrases of targets
- 		for element in list(itertools.combinations(positions, i)):
+		for element in list(itertools.combinations(positions, i)):
  			#Example: if positions is [1 4 6]
  			#now i've got: [] [1] [4] [6] [1 4] [1 6] [4 6] [1 4 6]
  			#erease position corresponding to the target in production right side
  			tadan = [production[right][i] for i in range(len(production[right])) if i not in element]
-
- 			if tadan != []:
+			if tadan != []:
  				result.append((production[left], tadan))
 	return result
 
