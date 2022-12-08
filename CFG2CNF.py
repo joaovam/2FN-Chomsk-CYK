@@ -104,9 +104,9 @@ def DEL(productions):
     for outlaw in outlaws:
         # consider every production: old + new resulting important when more than one outlaws are in the same prod.
         for production in productions + [e for e in newSet if e not in productions]:
-            # if outlaw is present in the right side of a rule
+            # if outlaw is present on the right side of a rule
             if outlaw in production[right]:
-                # the rule is rewrited in all combination of it, rewriting "e" rather than outlaw
+                # the rule is rewritten in all combination of it, rewriting "e" rather than outlaw
                 # this cycle prevent to insert duplicate rules
                 newSet = newSet + [e for e in helper.rewrite(outlaw, production) if e not in newSet]
 
