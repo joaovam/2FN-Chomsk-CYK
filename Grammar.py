@@ -25,11 +25,14 @@ class Grammar:
                 for rule in rules:
                     rule = rule.split("|")
                     x = []
-                    for r in rule:
-                        if r.strip() != '':
-                            x.append(r)
-                    if len(x) > 0:
-                        self.rules.append((variable, x))
+                    if isinstance(rules, list):
+                        for r in rule:
+                            if r.strip() != '':
+                                x.append(r)
+                        if len(x) > 0:
+                            self.rules.append((variable, x))
+                    else:
+                        self.rules.append((variable, rule))
 
 
     def print(self):
