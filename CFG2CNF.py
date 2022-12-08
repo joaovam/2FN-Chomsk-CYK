@@ -41,7 +41,7 @@ def getNewVar():
 # Add S0->S rule––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––START
 def START(productions, variables):
     variables.append(variables[0]+'_0')
-    return [(variables[0]+'_0', [variables[0]])] + productions
+    return [(variables[0]+'_0', [variables[0]])] + productions, variables[0] + '_0'
 
 #Remove rules containing both terms and variables, like A->Bc, replacing by A->BZ and Z->c–––––––––––TERM
 def TERM(productions, variables, terminals):
@@ -89,7 +89,7 @@ def BIN(productions, variables):
                 var, var2 = newVar + str(i), newVar + str(i + 1)
                 variables.append(var2)
                 result.append((var, [production[right][i], var2]))
-            result.append((newVar + str(k - 2), production[right][k - 2:k]))
+            result.append((newVar , production[right][k - 2:k]))  # + str(k - 2) : caso de errado novas variaveis
     return result
 
 

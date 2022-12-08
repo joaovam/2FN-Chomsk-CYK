@@ -7,6 +7,15 @@ def union(lst1, lst2):
     final_list = list(set().union(lst1, lst2))
     return final_list
 
+def loadModel(modelPath):
+	file = open(modelPath).read()
+	K = (file.split("Variables:\n")[0].replace("Terminals:\n","").replace("\n",""))
+	V = (file.split("Variables:\n")[1].split("Productions:\n")[0].replace("Variables:\n","").replace("\n",""))
+	P = (file.split("Productions:\n")[1])
+
+	
+	return cleanAlphabet(K), cleanAlphabet(V), cleanProduction(P)
+
 #Make production easy to work with
 def cleanProduction(expression):
     result = []
@@ -19,8 +28,6 @@ def cleanProduction(expression):
         rightTerms = rule.split(' -> ')[1].split(' | ')
         for term in rightTerms:
             result.append( (leftSide, term.split(' ')) )
-    print("Result: ",end="")
-    print(result)
     return result
 
 def cleanAlphabet(expression):
@@ -87,3 +94,17 @@ def prettyForm(rules):
     for key in dictionary:
         result += key+" -> "+dictionary[key]+"\n"
     return result
+
+def startingRuleFirst(grammar):
+	for rule in grammar.rules:
+		if rule[0] == grammar.initial:
+			initial_rule = rule
+			grammar.rules.remove(rule)
+			grammar.rules.insert(0, initial_rule)
+	
+	grammar.variables.remove(grammar.initial)
+	grammar.variables.insert(0, grammar.initial)
+
+	return grammar
+
+	

@@ -1,6 +1,7 @@
-S Y X
 a b c
-S -> aXb
-X -> aY | bY | e
+Variables:
+S Y X
+Productions:
+S -> a X b;
+X -> a Y | b Y | e;
 Y -> X | c
-*

@@ -7,12 +7,13 @@ class Grammar:
         self.rules = []
         self.terminals = []
         self.variables = []
+        self.initial = ""
 
     def readGrammar(self, filename):  # $ == lambda
 
+        self.terminals, self.variables, self.rules = helper.loadModel(filename)
 
-
-        with open(filename, 'r', encoding='utf8') as file:
+        """ with open(filename, 'r', encoding='utf8') as file:
             self.variables = file.readline().strip().split(" ")
             self.terminals = file.readline().strip().split(" ")
 
@@ -32,7 +33,7 @@ class Grammar:
                         if len(x) > 0:
                             self.rules.append((variable, x))
                     else:
-                        self.rules.append((variable, rule))
+                        self.rules.append((variable, rule)) """
 
 
     def print(self):
@@ -43,8 +44,7 @@ class Grammar:
         print(self.terminals)
 
         print("Rules:")
-        print(self.rules)
-        helper.prettyForm(self.rules)
+        print(helper.prettyForm(self.rules))
 
 
 
@@ -56,18 +56,19 @@ def cfgToCnf(grammar: Grammar):
     # cnf_grammar = convert_to_cnf(grammar.rules)
     f2c.defineVariable(grammar.variables)
 
-    print("STEP 1: " + str(grammar.rules))
-    grammar.rules = f2c.START(grammar.rules, variables=grammar.variables)
-    print("STEP 2: " + str(grammar.rules))
+    # print("STEP 1: " + str(grammar.rules))
+    grammar.rules, grammar.initial = f2c.START(grammar.rules, variables=grammar.variables)
+    # print("STEP 2: " + str(grammar.rules))
     grammar.rules = f2c.TERM(grammar.rules, variables=grammar.variables, terminals=grammar.terminals)
-    print("STEP 3: " + str(grammar.rules))
+    # print("STEP 3: " + str(grammar.rules))
     grammar.rules = f2c.BIN(grammar.rules, variables=grammar.variables,)
-    print("STEP 4: " + str(grammar.rules))
+    # print("STEP 4: " + str(grammar.rules))
     grammar.rules = f2c.DEL(grammar.rules)
-    print("STEP 5: " + str(grammar.rules))
+    # print("STEP 5: " + str(grammar.rules))
     grammar.rules = f2c.UNIT(grammar.rules, variables=grammar.variables,)
-    print("STEP 6: " + str(grammar.rules))
+    # print("STEP 6: " + str(grammar.rules))
     
+    grammar = helper.startingRuleFirst(grammar)
     # Print the resulting CNF grammar
 
     # Helper function for generating new non-terminal symbols
