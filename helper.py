@@ -129,8 +129,8 @@ def findRulesRelatedToTerminals(grammar):
 def findRulesRelatedToVariables(grammar):
     X = []
     for lhs, rhs in grammar.rules:
-        for x in rhs:
 
-            if x in grammar.variables:
+        if rhs[0] not in grammar.terminals:
+            if rhs[0] in grammar.variables or rhs[1] in grammar.variables:
                 X.append((lhs, rhs))
     return X

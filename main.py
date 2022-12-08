@@ -18,7 +18,7 @@ if __name__ == '__main__':
     var = helper.findRulesRelatedToVariables(g)
     print(term)
     print(var)
-    sentence_1 = "ab"
+    sentence_1 = "aaacb"
     isMember = cyk_parser(g, sentence_1)
     print("Is member?", isMember)
     pprint.pprint(isMember)
