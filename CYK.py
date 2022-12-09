@@ -82,3 +82,21 @@ def nullable(grammar):
                     null.append(tuples[0])
                     todo.append([tuples[0]])
     return null
+
+def constructGraph(grammar, nullables):
+    graph = []
+
+    for rhs,lhs in grammar.rules:
+        if len(lhs) > 1:
+            if lhs[0] in nullables:
+                if lhs[1] in grammar.terminals:
+                    graph.append((lhs[1], rhs))
+
+            elif lhs[1] in nullables:
+                if lhs[0] in grammar.terminals:
+                    graph.append((lhs[0], rhs))
+
+        else:
+            graph.append((lhs, rhs))
+
+    return graph
