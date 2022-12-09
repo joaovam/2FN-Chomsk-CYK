@@ -120,9 +120,9 @@ def findRulesRelatedToTerminals(grammar):
     X = []
     for lhs, rhs in grammar.rules:
         for x in rhs:
-
-            if x in grammar.terminals:
-                X.append((lhs, rhs))
+            if len(x) == 1:
+                if x in grammar.terminals:
+                    X.append((lhs, rhs))
     return X
 
 

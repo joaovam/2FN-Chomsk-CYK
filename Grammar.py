@@ -73,6 +73,17 @@ def cfgToCnf(grammar: Grammar):
 
     # Helper function for generating new non-terminal symbols
 
+def cfgTo2nf(grammar: Grammar):
+
+    f2c.defineVariable(grammar.variables)
+
+    grammar.rules = f2c.BIN(grammar.rules, variables=grammar.variables)
+
+    print(grammar.variables)
+    print(grammar.terminals)
+    print(grammar.rules)
+    
+    #grammar = helper.startingRuleFirst(grammar)
 
 def new_symbol(symbols):
     return f"S_{len(symbols)}"
