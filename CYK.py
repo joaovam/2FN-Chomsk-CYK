@@ -50,15 +50,22 @@ def nullable(grammar):
         occurs[var] = []
 
     for lhs, rhs in vars:
-        if len(rhs) == 1:
-            oneVar.append((lhs, rhs))
-        else:
-            twoVar.append((lhs, rhs))
+        if len(rhs) == 1 and rhs[0] in grammar.variables:
+            oneVar.append((lhs[0], rhs[0]))
+        elif rhs[0] in grammar.variables and rhs[1] in grammar.variables:
+            twoVar.append((lhs[0], rhs))
 
-    for rhs, lhs in oneVar:
+    for lhs, rhs in oneVar:
+        print(lhs)
+        # if lhs not in occurs.keys():
+        #     occurs[lhs] = []
         occurs[lhs].append(rhs)
 
-    for rhs, lhs in twoVar:
+    for lhs, rhs in twoVar:
+        # if lhs[0] not in occurs.keys():
+        #     occurs[lhs[0]] = []
+        # if lhs[1] not in occurs.keys():
+        #     occurs[lhs[1]] = []
         occurs[lhs[0]].append((rhs, lhs[1]))
 
         occurs[lhs[1]].append((rhs, lhs[0]))
@@ -75,6 +82,7 @@ def nullable(grammar):
         X = occurs[B]
         foundTuples = []
         for rules in X:
+
             if type(rules) is tuple:
                 foundTuples.append(rules)
             for tuples in foundTuples:
@@ -97,6 +105,8 @@ def constructGraph(grammar, nullables):
                     graph.append((lhs[0], rhs))
 
         else:
-            graph.append((lhs, rhs))
+            graph.append((lhs[0], rhs))
+
+
 
     return graph

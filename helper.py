@@ -131,6 +131,9 @@ def findRulesRelatedToVariables(grammar):
     for lhs, rhs in grammar.rules:
 
         if rhs[0] not in grammar.terminals:
-            if rhs[0] in grammar.variables or rhs[1] in grammar.variables:
+            if len(rhs) > 1:
+                if rhs[0] in grammar.variables or rhs[1] in grammar.variables:
+                    X.append((lhs, rhs))
+            else:
                 X.append((lhs, rhs))
     return X
