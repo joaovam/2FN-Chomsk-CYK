@@ -25,7 +25,7 @@ def cleanProduction(expression):
     rawRulse = expression.replace('\n', '').split(';')
 
     for rule in rawRulse:
-        # Explode evry rule on "->" and make a couple
+        # Explode evry rule on "->" and make a couple7
         leftSide = rule.split(' -> ')[0].replace(' ', '')
         rightTerms = rule.split(' -> ')[1].split(' | ')
         for term in rightTerms:
@@ -130,10 +130,15 @@ def findRulesRelatedToVariables(grammar):
     X = []
     for lhs, rhs in grammar.rules:
 
-        if rhs[0] not in grammar.terminals:
+        if rhs[0] in grammar.variables:
             if len(rhs) > 1:
                 if rhs[0] in grammar.variables or rhs[1] in grammar.variables:
                     X.append((lhs, rhs))
             else:
                 X.append((lhs, rhs))
+        elif len(rhs) > 1:
+            if rhs[1] in grammar.variables:
+                if rhs[0] in grammar.variables or rhs[1] in grammar.variables:
+                    X.append((lhs, rhs))
+            
     return X
