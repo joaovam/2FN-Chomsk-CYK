@@ -7,11 +7,8 @@ Rules: [('P', ['0', 'Z_0']), ('Z_0', ['P', '1']), ('P', ['$'])]
 
 
 |W|: 1      Duration: 0.0
-|W|: 2      Duration: 0.0
-|W|: 4      Duration: 0.001001119613647461
-|W|: 5      Duration: 0.0
-|W|: 6      Duration: 0.0
-|W|: 18      Duration: 0.0009989738464355469
-|W|: 33      Duration: 0.0050470829010009766
-|W|: 200      Duration: 0.8875994682312012
-Average time: 0.11183083057403564 s
+|W|: 1      Duration: 0.0
+|W|: 10      Duration: 0.0
+|W|: 100      Duration: 0.13498950004577637
+|W|: 200      Duration: 0.9300615787506104
+Average time: 0.21301021575927734 s

@@ -1,0 +1,14 @@
+
+Grammar:
+
+Variables: ['P', 'Z_0'] 
+Terminals: ['0', '1'] 
+Rules: [('P', ['0', 'Z_0']), ('Z_0', ['P', '1']), ('P', ['$'])] 
+
+Sentence: 00111
+
+Nullables: ['P']
+Inverse Unit Graph: {'1': ['Z_0']}
+
+The sentence 00111 DOES NOT belongs to the grammar.
+Duration: 0.0 s
