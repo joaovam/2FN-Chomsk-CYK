@@ -1,5 +1,5 @@
-import CFG2CNF as f2c
-import helper
+import src.CFG2CNF as f2c
+import src.helper as helper
 
 class Grammar:
     def __init__(self):
@@ -78,10 +78,6 @@ def cfgTo2nf(grammar: Grammar):
     f2c.defineVariable(grammar.variables)
 
     grammar.rules = f2c.BIN(grammar.rules, variables=grammar.variables)
-
-    print(grammar.variables)
-    print(grammar.terminals)
-    print(grammar.rules)
     
     #grammar = helper.startingRuleFirst(grammar)
 

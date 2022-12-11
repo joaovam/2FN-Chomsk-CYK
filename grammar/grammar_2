@@ -1,0 +1,5 @@
+0 1
+Variables:
+P
+Productions:
+P -> 0 P 0 | 1 P 1 | 0 | 1 | $ 

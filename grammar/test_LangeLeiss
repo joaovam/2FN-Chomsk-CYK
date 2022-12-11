@@ -4,5 +4,5 @@ E T F I
 Productions:
 E -> T | E + T;
 T -> F | T * F;
-F -> a I | b I | ( E );
+F -> a I | b I | ( E ) | I;
 I -> 0 I | 1 I | $

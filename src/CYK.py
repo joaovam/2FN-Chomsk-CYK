@@ -1,7 +1,7 @@
 # Function to perform the CYK Algorithm
-import helper
+import src.helper as helper
 import pprint
-from Grammar import Grammar
+from src.Grammar import Grammar
 
 
 def cyk_parser(grammar, sentence):
@@ -41,7 +41,6 @@ def nullable(grammar):
     todo = []
 
     vars = helper.findRulesRelatedToVariables(grammar)
-    print("Vars: " + str(vars))
 
     oneVar = []
     twoVar = []
@@ -58,7 +57,6 @@ def nullable(grammar):
             twoVar.append((lhs[0], rhs))
 
     for lhs, rhs in oneVar:
-        print(lhs)
         # if lhs not in occurs.keys():
         #     occurs[lhs] = []
         occurs[rhs].append(lhs)
@@ -100,22 +98,22 @@ def constructGraph(grammar, nullables):
     for lhs, rhs in grammar.rules:
         if len(rhs) > 1:
             if rhs[0] in nullables:
-                if rhs[1] in grammar.terminals:
-                    if(graph.get(rhs[1]) == None):
-                        graph[rhs[1]] = []
-                    graph[rhs[1]].append(lhs)
+                #if rhs[1] in grammar.terminals:
+                if(graph.get(rhs[1]) == None):
+                    graph[rhs[1]] = []
+                graph[rhs[1]].append(lhs)
 
             if rhs[1] in nullables:
-                if rhs[0] in grammar.terminals:
-                    if(graph.get(rhs[0]) == None):
-                        graph[rhs[0]] = []
-                    graph[rhs[0]].append(lhs)
-
-        else:
-            if rhs[0] in grammar.terminals:
+                #if rhs[0] in grammar.terminals:
                 if(graph.get(rhs[0]) == None):
-                        graph[rhs[0]] = []
+                    graph[rhs[0]] = []
                 graph[rhs[0]].append(lhs)
+
+        elif rhs[0] != '$': # SIMBOLO DE VAZIO
+            #if rhs[0] in grammar.terminals:
+            if(graph.get(rhs[0]) == None):
+                    graph[rhs[0]] = []
+            graph[rhs[0]].append(lhs)
 
     return graph
 
@@ -147,7 +145,7 @@ def discoverReach(graph, word_list):
         visited = dfs(graph, node)
         for i in range(0, len(visited)):
             canReach.add(visited[i])
-    canReach.discard(visited[0])
+    
 
     return list(canReach)
 
@@ -166,23 +164,7 @@ def cyk_parser_LangeLeiss(grammar, graph, word):
         terminal = word[i]
         for rule in terms:
             reach = discoverReach(graph, [word[i]])
-            if len(reach) > 1:
-                table[i][i] = reach
-
-                
-    print("Table: ")
-    for i in range(0, n):
-        for j in range(0, n):
-            print(table[i][j], end="")
-        print("")
-    print("")
-
-    print("TablePrime: ")
-    for i in range(0, n):
-        for j in range(0, n):
-            print(tablePrime[i][j], end="")
-        print("")
-    print("")
+            table[i][i] = reach
 
 
     for j in range(1, n):
@@ -203,19 +185,5 @@ def cyk_parser_LangeLeiss(grammar, graph, word):
                         if B in table[i][h] and C in table[h + 1][j]:
                             tablePrime[i][j].append(A)
             table[i][j] = discoverReach(graph, tablePrime[i][j])
-
-    print("Table: ")
-    for i in range(0, n):
-        for j in range(0, n):
-            print(table[i][j], end="")
-        print("")
-    print("")
-
-    print("TablePrime: ")
-    for i in range(0, n):
-        for j in range(0, n):
-            print(tablePrime[i][j], end="")
-        print("")
-    print("")
 
     return grammar.variables[0] in table[0][n - 1]

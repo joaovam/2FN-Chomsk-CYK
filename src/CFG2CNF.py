@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # IT's assumed that starting variable is the first typed
-import sys, helper
+import sys, src.helper as helper
 
 left, right = 0, 1
 COUNTER = 0

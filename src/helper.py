@@ -142,3 +142,66 @@ def findRulesRelatedToVariables(grammar):
                     X.append((lhs, rhs))
             
     return X
+
+def create_output(filename, grammar, sentence, isMember, duration,isMod=False,nullables=None, inverseUnitGraph=None):
+    folder,file_output = filename.split("/")
+    
+    file_output = file_output.split(".")[0] + "_output.txt" if '.' in file_output else file_output + "_output.txt"
+    file_output = "CYK_" + file_output if not isMod else "CYK_Mod_" + file_output
+    foutput = open(folder + "/" + file_output, "w")
+
+    array_output = [f'''
+Grammar:
+
+Variables: {str(grammar.variables)} 
+Terminals: {str(grammar.terminals)} 
+Rules: {str(grammar.rules)} 
+
+Sentence: {str(sentence)}
+''']
+
+    foutput.writelines(array_output)
+
+    if(nullables != None and inverseUnitGraph != None):
+        array_output = [f'''
+Nullables: {str(nullables)}
+Inverse Unit Graph: {str(inverseUnitGraph)}
+
+''']
+        foutput.writelines(array_output)
+    
+    if(isMember):
+        foutput.write("The sentence " + sentence + " belongs to the grammar.")
+    else:
+        foutput.write("The sentence " + sentence + " DOES NOT belongs to the grammar.")
+
+    foutput.write("\nDuration: " + str(duration) + " s")
+
+    foutput.close()
+        
+def create_output_experiment(filename, grammar, information, isMod=False):
+    folder,file_output = filename.split("/")
+    
+    file_output = file_output.split(".")[0] + "_output.txt" if '.' in file_output else file_output + "_output.txt"
+    file_output = "CYK_" + file_output if not isMod else "CYK_Mod_" + file_output
+    foutput = open("output/" + file_output, "w")
+
+    array_output = [f'''
+Grammar:
+
+Variables: {str(grammar.variables)} 
+Terminals: {str(grammar.terminals)} 
+Rules: {str(grammar.rules)} 
+
+''']
+
+    foutput.writelines(array_output)
+
+    total_time = 0
+    for info in information:
+        foutput.write("\n|W|: " + str(info[0]) + "      Duration: " + str(info[1]))
+        total_time += info[1]
+    
+    foutput.write("\nAverage time: " + str(total_time/len(information)) + " s")
+
+    foutput.close()
