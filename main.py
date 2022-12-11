@@ -77,15 +77,15 @@ if __name__ == '__main__':
                     nullables = nullable(grammar)
                     inverseUnitGraph = constructGraph(grammar, nullables)
 
-                    isMember = cyk_parser_LangeLeiss(grammar, inverseUnitGraph, sentence_input)
+                    isMember = cyk_parser_LangeLeiss(grammar, inverseUnitGraph, sentence)
 
                     duration = time() - now
                     duration_sentences.append(( len(sentence), duration))
 
                     if(isMember):
-                        print("The sentence " + sentence_input + " belongs to the grammar.")
+                        print("The sentence " + sentence + " belongs to the grammar.")
                     else:
-                        print("The sentence " + sentence_input + " DOES NOT belongs to the grammar.")
+                        print("The sentence " + sentence + " DOES NOT belongs to the grammar.")
 
 
                 helper.create_output_experiment(filename, grammar, duration_sentences, True)
