@@ -1,4 +1,5 @@
 FTC - CYK Implementation (Lange, Leiss)
+Implementation of the conversion of a GLC to Chomsky's Normal Form and Binary Normal Form. Along with the implementation of the CYK algorithm and Modified CYK proposed in the (Lange, Leiss) paper.
 
 Danniel Henrique, João Amorim
 
